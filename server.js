@@ -9,11 +9,11 @@ app.engine('html', require('ejs').renderFile);
 app.use(morgan('combined'))
 
 var port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080,
-    ip   = process.env.IP   || process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0',
-    mongoURL = process.env.OPENSHIFT_MONGODB_DB_URL || process.env.MONGO_URL,
-    mongoURLLabel = "";
+    ip   = process.env.IP   || process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0';
+    //mongoURL = process.env.OPENSHIFT_MONGODB_DB_URL || process.env.MONGO_URL,
+   // mongoURLLabel = "";
 
-if (mongoURL == null) {
+/*if (mongoURL == null) {
   var mongoHost, mongoPort, mongoDatabase, mongoPassword, mongoUser;
   // If using plane old env vars via service discovery
   if (process.env.DATABASE_SERVICE_NAME) {
@@ -48,7 +48,8 @@ if (mongoURL == null) {
     mongoURLLabel += mongoHost + ':' + mongoPort + '/' + mongoDatabase;
     mongoURL += mongoHost + ':' +  mongoPort + '/' + mongoDatabase;
   }
-}
+}*/
+/*
 var db = null,
     dbDetails = new Object();
 
@@ -71,12 +72,12 @@ var initDb = function(callback) {
 
     console.log('Connected to MongoDB at: %s', mongoURL);
   });
-};
+};*/
 
 app.get('/', function (req, res) {
   // try to initialize the db on every request if it's not already
   // initialized.
-  if (!db) {
+  /*if (!db) {
     initDb(function(err){});
   }
   if (db) {
@@ -90,11 +91,11 @@ app.get('/', function (req, res) {
       res.render('index.html', { pageCountMessage : count, dbInfo: dbDetails });
     });
   } else {
-    res.render('index.html', { pageCountMessage : null});
-  }
+    */res.render('index.html');
+  //}
 });
 
-app.get('/pagecount', function (req, res) {
+/*app.get('/pagecount', function (req, res) {
   // try to initialize the db on every request if it's not already
   // initialized.
   if (!db) {
@@ -108,17 +109,17 @@ app.get('/pagecount', function (req, res) {
     res.send('{ pageCount: -1 }');
   }
 });
-
+*/
 // error handling
 app.use(function(err, req, res, next){
   console.error(err.stack);
   res.status(500).send('Something bad happened!');
 });
-
+/*
 initDb(function(err){
   console.log('Error connecting to Mongo. Message:\n'+err);
 });
-
+*/
 app.listen(port, ip);
 console.log('Server running on http://%s:%s', ip, port);
 
