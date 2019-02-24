@@ -16,11 +16,11 @@
 	  var location = {x:document.getElementById("x_coord").value,y:document.getElementById("y_coord").value};
 	  socket.emit('submitted location', location);
 	  
-	  //if(isSeatValid(location, width, height)){
+	  if(isSeatValid(location, width, height)){
 		document.getElementById("location_form").style.display = "none";
-      //}else{
-	//	alert("Please enter a valid seat");
-	  //}
+      }else{
+		alert("Please enter a valid seat");
+	  }
 	  
 //	  document.getElementById("testText").innerHTML = width;
 	  return false;

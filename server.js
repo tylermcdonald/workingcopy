@@ -43,6 +43,7 @@ function withinBounds(locat){
 function seatInUse(locat){
 	return (used[locat.x][locat.y]);
 }
+
 function isSeatValid(locat){
 	if(isNumeric(locat.x) && isNumeric(locat.y) && withinBounds(locat) && !seatInUse(locat)){
 		return true;
@@ -73,7 +74,6 @@ function initial(){
 		pixels[i%width][Math.floor(i/width)] = image_file.pixels[i];
 		used[i%width][Math.floor(i/width)] = false;
 	}
-	//console.log(pixels[9][9]);
 }
 initial();
 
@@ -97,14 +97,13 @@ io.on('connection', function(socket){
 
 io.on('connection', function(socket){
   socket.on('submitted location', function(msg){
-	//if(isSeatValid(msg)){
+	if(isSeatValid(msg)){
 			people_hash[socket.id].x = msg.x;
 			people_hash[socket.id].y = msg.y;
 			used[msg.x][msg.y] = true;
 			io.to(socket.id).emit("initial setup", pixels[msg.x-x_offset][msg.y-y_offset]);
-			//console.log(people_hash[socket.id].x);
-	//}
-	//return false;
+	}
+	return false;
   });
 });
 
