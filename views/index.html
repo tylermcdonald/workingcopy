@@ -37,6 +37,7 @@
 	
 	socket.on('initial setup', function(color_array){
 		pixelValues = color_array;
+		console.log(pixelValues);
 	})
 	
 	socket.on('update colors', function(index){

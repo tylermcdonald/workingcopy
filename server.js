@@ -96,14 +96,14 @@ io.on('connection', function(socket){
 
 io.on('connection', function(socket){
   socket.on('submitted location', function(msg){
-	if(isSeatValid(msg)){
+	//if(isSeatValid(msg)){
 			people_hash[socket.id].x = msg.x;
 			people_hash[socket.id].y = msg.y;
 			used[msg.x][msg.y] = true;
 			io.to(socket.id).emit("initial setup", pixels[msg.x-x_offset][msg.y-y_offset]);
 			//console.log(people_hash[socket.id].x);
-	}
-	return false;
+	//}
+	//return false;
   });
 });
 
@@ -126,11 +126,7 @@ app.use(function(err, req, res, next){
   console.error(err.stack);
   res.status(500).send('Something bad happened!');
 });
-/*
-initDb(function(err){
-  console.log('Error connecting to Mongo. Message:\n'+err);
-});
-*/
+
 http.listen(port, ip);
 console.log('Server running on http://%s:%s', ip, port);
 
