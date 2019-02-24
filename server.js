@@ -1,8 +1,12 @@
 //  OpenShift sample Node application
 var express = require('express'),
     app     = express(),
-    morgan  = require('morgan');
-    
+    morgan  = require('morgan'),
+	io = require('socket.io'),
+	fs = require('fs');
+	
+var http = require('http').Server(app);
+
 Object.assign=require('object-assign')
 
 app.engine('html', require('ejs').renderFile);
@@ -10,6 +14,20 @@ app.use(morgan('combined'))
 
 var port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080,
     ip   = process.env.IP   || process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0';
+	
+var count = 0;
+var people_hash = {};
+var image_file = JSON.parse(fs.readFileSync("data1.json","utf8"));
+
+var rate = 1000;
+var width = 20;
+var height = 20;
+var x_offset = 0;
+var y_offset = 0;
+
+var used = 0;
+var used_y = {};
+var pixels = [[],[],[]];
     //mongoURL = process.env.OPENSHIFT_MONGODB_DB_URL || process.env.MONGO_URL,
    // mongoURLLabel = "";
 
