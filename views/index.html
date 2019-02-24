@@ -16,14 +16,14 @@
 	  var location = {x:document.getElementById("x_coord").value,y:document.getElementById("y_coord").value};
 	  socket.emit('submitted location', location);
 	  
-	  /*if(isSeatValid(location, width, height)){
+	  if(isSeatValid(location, width, height)){
 		document.getElementById("location_form").style.display = "none";
       }else{
 		alert("Please enter a valid seat");
 	  }
 	  
 	  document.getElementById("testText").innerHTML = width;
-	  return false;*/
+	  return false;
     });
 	
 	
@@ -46,6 +46,28 @@
 	
 	});
 </script>
+<script>
+	function isNumeric(n) {
+		return !isNaN(parseFloat(n)) && isFinite(n);
+	}
+	function withinBounds(locat, width, height){
+		if(locat.x < width && locat.y < height){
+				return true;
+		}
+		console.log("A");
+		return false;
+	}
+	function seatInUse(locat){
+		return (used[locat.x][locat.y]);
+	}
+	function isSeatValid(locat, width, height, used){
+		if(isNumeric(locat.x) && isNumeric(locat.y) && withinBounds(locat,width,height) && !seatInUse(locat, used){
+			return true;
+		}
+		return false;
+	}
+</script>    
+
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   

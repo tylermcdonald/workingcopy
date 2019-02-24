@@ -83,16 +83,42 @@ app.get('/', function (req, res) {
 
 io.on('connection', function(socket){
   console.log('a user connected');
-  //people_hash[socket.id] = {x:-1,y:-1};
+  people_hash[socket.id] = {x:-1,y:-1};
   count = count + 1;
   io.emit('count change', count)
-  //io.to(socket.id).emit("give dimensions",{"width":width, "height":height});
+  io.to(socket.id).emit("give dimensions",{"width":width, "height":height});
   socket.on('disconnect', function(){
     console.log('user disconnected');
 	count = count-1;
 	io.emit('count change', count);
   });
 });
+
+io.on('connection', function(socket){
+  socket.on('submitted location', function(msg){
+	if(isSeatValid(msg)){
+			people_hash[socket.id].x = msg.x;
+			people_hash[socket.id].y = msg.y;
+			used[msg.x][msg.y] = true;
+			io.to(socket.id).emit("initial setup", pixels[msg.x-x_offset][msg.y-y_offset]);
+			//console.log(people_hash[socket.id].x);
+	}
+	return false;
+  });
+});
+
+var index = 0;
+function intervalFunc() {
+  for(var key in people_hash){
+	if(people_hash[key].x > -1 && people_hash[key].y > -1){		
+		io.to(key).emit('update colors',index);
+	}
+  }
+  index = (index + 1)%pixels[0][0].length;
+  //console.log(index);
+}
+setInterval(intervalFunc, rate);
+
 
 
 // error handling
