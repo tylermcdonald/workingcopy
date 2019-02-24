@@ -85,12 +85,12 @@ io.on('connection', function(socket){
   console.log('a user connected');
   //people_hash[socket.id] = {x:-1,y:-1};
   count = count + 1;
-  //io.emit('count change', count)
+  io.emit('count change', count)
   //io.to(socket.id).emit("give dimensions",{"width":width, "height":height});
   socket.on('disconnect', function(){
     console.log('user disconnected');
 	count = count-1;
-	//io.emit('count change', count);
+	io.emit('count change', count);
   });
 });
 
