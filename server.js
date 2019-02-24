@@ -17,7 +17,7 @@ var port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080,
 	
 var count = 0;
 var people_hash = {};
-var image_file = JSON.parse(fs.readFileSync("data1.json","utf8"));
+var image_file = JSON.parse(fs.readFileSync("data2.json","utf8"));
 
 var rate = 1000;
 var width = 20;
@@ -27,7 +27,7 @@ var y_offset = 0;
 
 var used = 0;
 var used_y = {};
-var pixels = [[],[],[]];
+var pixels = [[],[],[],[],[],[],[]];
 
 function isNumeric(n) {
   return !isNaN(parseFloat(n)) && isFinite(n);
@@ -73,7 +73,7 @@ function initial(){
 		pixels[i%width][Math.floor(i/width)] = image_file.pixels[i];
 		used[i%width][Math.floor(i/width)] = false;
 	}
-	console.log(pixels[9][9]);
+	//console.log(pixels[9][9]);
 }
 initial();
 
