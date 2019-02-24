@@ -115,9 +115,14 @@ io.on('connection', function(socket){
 	return false;
   });
 });
+var timing = 0;
+function timer(){
+	timing = timing+1;
+}
+setInterval(timer,1000);
 
 var index = 0;
-var wrapCount = 0;
+
 
 function intervalFunc() {
   for(var key in people_hash){
@@ -126,12 +131,9 @@ function intervalFunc() {
 	}
   }
   index = (index + 1)%pixels[0][0].length;
-  if(index == 0){
-	wrapCount = wrapCount + 1;
-	console.log(wrapCount);
-  }
-  if(wrapCount == 3){
-	wrapCount = 0;
+
+  if(timing == 30){
+	timing = 0;
 	readNewFile();
 	initial();
 	console.log("Changing File Data");
