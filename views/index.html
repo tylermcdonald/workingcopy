@@ -1,8 +1,54 @@
 <!doctype html>
 <html lang="en">
 <head>
+<script src="/socket.io/socket.io.js"></script>
+<script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+<script>
+  $(function () {
+	var pixelValues = ["FFFFFF"];
+	var socket = io();
+	var curIndex = 0;
+	var width = 0;
+	var height = 0;
+	var used = 0;
+    $('form').submit(function(e){
+      e.preventDefault(); // prevents page reloading
+	  var location = {x:document.getElementById("x_coord").value,y:document.getElementById("y_coord").value};
+	  socket.emit('submitted location', location);
+	  
+	  /*if(isSeatValid(location, width, height)){
+		document.getElementById("location_form").style.display = "none";
+      }else{
+		alert("Please enter a valid seat");
+	  }
+	  
+	  document.getElementById("testText").innerHTML = width;
+	  return false;*/
+    });
+	
+	/*
+	socket.on("give dimensions", function(dimensions){
+		width = dimensions.width;
+		height = dimensions.height;
+	});
+	socket.on('count change', function(newnum){
+		document.getElementById("count").innerHTML = newnum;
+	});
+	
+	socket.on('initial setup', function(color_array){
+		pixelValues = color_array;
+	})
+	
+	socket.on('update colors', function(index){
+		console.log(pixelValues[index]);
+		document.body.style.backgroundColor = "#"+pixelValues[index];
+	});*/
+	
+	});
+</script>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  
 <title>Web Pixel Map</title>
     <style>
       * { margin: 0; padding: 0; box-sizing: border-box; }

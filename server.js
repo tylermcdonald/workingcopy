@@ -2,10 +2,10 @@
 var express = require('express'),
     app     = express(),
     morgan  = require('morgan'),
-	io = require('socket.io'),
 	fs = require('fs');
 	
 var http = require('http').Server(app);
+var io = require('socket.io')(http);
 
 Object.assign=require('object-assign')
 
@@ -79,6 +79,18 @@ initial();
 
 app.get('/', function (req, res) {
     res.render('index.html');
+});
+io.on('connection', function(socket){
+  console.log('a user connected');
+  //people_hash[socket.id] = {x:-1,y:-1};
+  count = count + 1;
+  //io.emit('count change', count)
+  //io.to(socket.id).emit("give dimensions",{"width":width, "height":height});
+  socket.on('disconnect', function(){
+    console.log('user disconnected');
+	count = count-1;
+	//io.emit('count change', count);
+  });
 });
 
 
