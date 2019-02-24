@@ -28,6 +28,53 @@ var y_offset = 0;
 var used = 0;
 var used_y = {};
 var pixels = [[],[],[]];
+
+function isNumeric(n) {
+  return !isNaN(parseFloat(n)) && isFinite(n);
+}
+function withinBounds(locat){
+		if(locat.x < width && locat.y < height){
+				return true;
+		}
+		console.log("A");
+		return false;
+	}
+
+function seatInUse(locat){
+	return (used[locat.x][locat.y]);
+}
+function isSeatValid(locat){
+	if(isNumeric(locat.x) && isNumeric(locat.y) && withinBounds(locat) && !seatInUse(locat)){
+		return true;
+	}
+	return false;
+}
+
+function zeros(dimensions) {
+    var array = [];
+
+    for (var i = 0; i < dimensions[0]; ++i) {
+        array.push(dimensions.length == 1 ? 0 : zeros(dimensions.slice(1)));
+    }
+
+    return array;
+}
+
+function initial(){
+	rate = image_file.meta.rate;
+	width = image_file.meta.width;
+	height = image_file.meta.height;
+	x_offset = image_file.meta.topleft.x;
+	y_offset = image_file.meta.topleft.y;
+	pixels = zeros([height,width]);
+	used = zeros([height,width]);
+	console.log(width);
+	for(var i = 0; i < width*height; i++){
+		pixels[i%width][Math.floor(i/width)] = image_file.pixels[i];
+		used[i%width][Math.floor(i/width)] = false;
+	}
+}
+initial();
     //mongoURL = process.env.OPENSHIFT_MONGODB_DB_URL || process.env.MONGO_URL,
    // mongoURLLabel = "";
 
