@@ -7,6 +7,7 @@ var express = require('express'),
 var path = require('path');
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
+var request = require("request")
 
 Object.assign=require('object-assign')
 
@@ -16,7 +17,10 @@ app.use(express.static(path.join(__dirname,"public")));
 
 var port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080,
     ip   = process.env.IP   || process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0';
-	
+
+var url = "https://raw.githubusercontent.com/tylermcdonald/webPixelMap/master/data1.json"
+
+
 var count = 0;
 var people_hash = {};
 var image_file = JSON.parse(fs.readFileSync("colortest.json","utf8"));
@@ -113,6 +117,8 @@ io.on('connection', function(socket){
 });
 
 var index = 0;
+var wrapCount = 0;
+
 function intervalFunc() {
   for(var key in people_hash){
 	if(people_hash[key].x > -1 && people_hash[key].y > -1){		
@@ -120,11 +126,36 @@ function intervalFunc() {
 	}
   }
   index = (index + 1)%pixels[0][0].length;
-  //console.log(index);
+  if(index == 0){
+	wrapCount = wrapCount + 1;
+	console.log(wrapCount);
+  }
+  if(wrapCount == 3){
+	wrapCount = 0;
+	readNewFile();
+	initial();
+	console.log("Changing File Data");
+	for(var key in people_hash){
+		io.to(key).emit("give dimensions",{"width":width, "height":height});
+		if(people_hash[key].x > -1 && people_hash[key].y > -1){
+			io.to(key).emit("initial setup", pixels[people_hash[key].x-x_offset][people_hash[key].y-y_offset]);
+		}
+	}
+  }
 }
 setInterval(intervalFunc, rate);
 
+function readNewFile(){
+	request({
+		url: url,
+		json: true
+	}, function (error, response, body) {
 
+    if (!error && response.statusCode === 200) {
+        image_file = body;// Print the json response
+    }
+})
+}
 
 // error handling
 app.use(function(err, req, res, next){
