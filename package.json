@@ -15,6 +15,7 @@
     "mongodb": "^2.2.36",
     "morgan": "^1.9.1",
     "object-assign": "^4.1.0",
+    "path": "^0.12.7",
     "socket.io": "^2.2.0"
   },
   "engine": {
