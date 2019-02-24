@@ -17,7 +17,7 @@ var port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080,
 	
 var count = 0;
 var people_hash = {};
-var image_file = JSON.parse(fs.readFileSync("data1.json","utf8"));
+var image_file = JSON.parse(fs.readFileSync("colortest.json","utf8"));
 
 var rate = 1000;
 var width = 20;
