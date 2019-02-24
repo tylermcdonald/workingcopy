@@ -58,10 +58,11 @@
 		return false;
 	}
 	function seatInUse(locat){
-		return (used[locat.x][locat.y]);
+		return false;
+		//TODOreturn (used[locat.x][locat.y]);
 	}
 	function isSeatValid(locat, width, height, used){
-		if(isNumeric(locat.x) && isNumeric(locat.y) && withinBounds(locat,width,height){
+		if(isNumeric(locat.x) && isNumeric(locat.y) && withinBounds(locat,width,height) && !seatInUse(locat)){
 			return true;
 		}
 		return false;
