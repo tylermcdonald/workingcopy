@@ -80,6 +80,7 @@ initial();
 app.get('/', function (req, res) {
     res.render('index.html');
 });
+
 io.on('connection', function(socket){
   console.log('a user connected');
   //people_hash[socket.id] = {x:-1,y:-1};
@@ -104,7 +105,7 @@ initDb(function(err){
   console.log('Error connecting to Mongo. Message:\n'+err);
 });
 */
-app.listen(port, ip);
+http.listen(port, ip);
 console.log('Server running on http://%s:%s', ip, port);
 
 module.exports = app ;
