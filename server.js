@@ -90,6 +90,9 @@ io.on('connection', function(socket){
   io.to(socket.id).emit("give dimensions",{"width":width, "height":height});
   socket.on('disconnect', function(){
     console.log('user disconnected');
+	if(people_hash[socket.id].x > -1 && people_hash[socket.id].y > -1){
+		used[people_hash[socket.id].x][people_hash[socket.id].y]=false;
+	}
 	count = count-1;
 	io.emit('count change', count);
   });
