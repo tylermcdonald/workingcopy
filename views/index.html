@@ -13,7 +13,8 @@
 	var used = 0;
     $('form').submit(function(e){
       e.preventDefault(); // prevents page reloading
-	  var location = {x:document.getElementById("x_coord").value,y:document.getElementById("y_coord").value};
+	  var coords = document.getElementById("coords").value.split(",")
+	  var location = {x:coords[0],y:coords[1]};
 	  socket.emit('submitted location', location);
 	  
 	  if(isSeatValid(location, width, height)){
@@ -87,10 +88,10 @@
 	
 	<form id = "location_form" action="">
 	
-        X Coord:<br>
-		<input type="number" id="x_coord" min = 0><br>
-		Y Coord:<br>
-		<input type="number" id="y_coord" min = 0><button>Send</button>
+        XY Coord:<br>
+		<input type="text" id="coords" placeholder = "X,Y" pattern="[0-9]{1,}+,+[0-9]{1,}"><br>
+		<!--Y Coord:<br>
+		<input type="number" id="y_coord" min = 0>--><button>Send</button>
     </form>
   </body>
 </html>
