@@ -73,6 +73,7 @@ function initial(){
 		pixels[i%width][Math.floor(i/width)] = image_file.pixels[i];
 		used[i%width][Math.floor(i/width)] = false;
 	}
+	console.log(pixels[9][9]);
 }
 initial();
 
