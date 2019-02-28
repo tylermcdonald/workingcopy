@@ -155,6 +155,7 @@ function readNewFile(){
 
     if (!error && response.statusCode === 200) {
         image_file = body;// Print the json response
+		
     }
 })
 }

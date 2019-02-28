@@ -33,6 +33,7 @@
 	socket.on("give dimensions", function(dimensions){
 		width = dimensions.width;
 		height = dimensions.height;
+		document.getElementById("dimensions").innerHTML = "Current data dimensions: " + width.toString()+"x"+height.toString();
 	});
 	socket.on('count change', function(newnum){
 		document.getElementById("count").innerHTML = newnum;
@@ -81,9 +82,9 @@
   </head>
   <body>
     <p id="count">0</p>
-	
+	<p id= "dimensions">0x0</p>
 	<form id = "location_form" action="">
-	
+		
         XY Coord:<br>
 		<input type="text" id="coords" placeholder = "X,Y" pattern="[0-9]{1,}+,+[0-9]{1,}"><br>
 		<!--Y Coord:<br>
